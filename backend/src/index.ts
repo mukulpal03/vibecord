@@ -7,6 +7,7 @@ import songRoutes from "./routes/song";
 import albumRoutes from "./routes/album";
 import statsRoutes from "./routes/stats";
 import { clerkMiddleware } from "@clerk/express";
+import { errorHandler } from "./middlewares/globalError";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/song", songRoutes);
 app.use("/api/album", albumRoutes);
 app.use("/api/stats", statsRoutes);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
