@@ -8,11 +8,13 @@ export const protectRoute = async (
 ) => {
   try {
     if (!req.auth.userId) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized - you must be signed in" });
     }
     next();
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -27,11 +29,13 @@ export const checkAdmin = async (
       process.env.ADMIN_EMAIL === currentUser.emailAddresses[0].emailAddress;
 
     if (!isAdmin) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized - you must be admin" });
     }
 
     next();
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };

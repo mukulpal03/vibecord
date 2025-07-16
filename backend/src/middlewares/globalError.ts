@@ -8,7 +8,9 @@ export const errorHandler = (
 ) => {
   return res.status(500).json({
     success: false,
-    message: err.message ?? "Something went wrong",
-    errors: [],
+    message:
+      process.env.NODE_ENV === "production"
+        ? "Internal Server Error"
+        : err.message,
   });
 };
